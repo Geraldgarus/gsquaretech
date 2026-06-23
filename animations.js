@@ -61,4 +61,68 @@ document.addEventListener('DOMContentLoaded', () => {
   }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
 
   document.querySelectorAll('.anim').forEach(el => io.observe(el));
+
+  // ── SCROLL COLOR EFFECTS ─────────────────────────────────
+
+  // Progress bar
+  const progressBar = document.createElement('div');
+  progressBar.id = 'scroll-progress';
+  progressBar.style.cssText = [
+    'position:fixed', 'top:0', 'left:0', 'height:3px', 'width:0%',
+    'z-index:10000', 'pointer-events:none',
+    'background:linear-gradient(90deg,#06b6d4 0%,#a855f7 40%,#f59e0b 70%,#06b6d4 100%)',
+    'background-size:200% 100%',
+    'transition:width 0.08s linear',
+  ].join(';');
+  document.body.prepend(progressBar);
+
+  // Ambient glow overlay that drifts and changes hue as you scroll
+  const glow = document.createElement('div');
+  glow.id = 'scroll-glow';
+  glow.style.cssText = [
+    'position:fixed', 'inset:0', 'pointer-events:none', 'z-index:0',
+    'transition:background 1.4s ease',
+  ].join(';');
+  document.body.appendChild(glow);
+
+  const nav = document.querySelector('nav');
+
+  // Colour stops cycling through as user scrolls:
+  //   0 %  → cyan   hsl(189,96%,43%)
+  //  33 %  → purple hsl(271,91%,65%)
+  //  66 %  → gold   hsl(38,92%,50%)
+  // 100 %  → cyan   (loops back)
+  function scrollHue(progress) {
+    const stops = [189, 271, 38, 189];
+    const seg   = progress * (stops.length - 1);
+    const idx   = Math.floor(seg);
+    const t     = seg - idx;
+    const h0    = stops[Math.min(idx,     stops.length - 1)];
+    const h1    = stops[Math.min(idx + 1, stops.length - 1)];
+    return Math.round(h0 + (h1 - h0) * t);
+  }
+
+  window.addEventListener('scroll', () => {
+    const scrollTop  = window.scrollY;
+    const docHeight  = document.documentElement.scrollHeight - window.innerHeight;
+    const progress   = docHeight > 0 ? scrollTop / docHeight : 0;
+
+    // Progress bar fill
+    progressBar.style.width = (progress * 100) + '%';
+    progressBar.style.backgroundPosition = (progress * 100) + '% 0';
+
+    // Navbar solidifies
+    if (scrollTop > 60) {
+      nav.classList.add('nav-scrolled');
+    } else {
+      nav.classList.remove('nav-scrolled');
+    }
+
+    // Ambient glow: drifts across and shifts hue
+    const hue = scrollHue(progress);
+    const x   = 20 + progress * 60;       // drifts left → right
+    const y   = -15 + progress * 30;      // drifts up → down
+    glow.style.background =
+      `radial-gradient(ellipse 70% 55% at ${x}% ${y}%, hsla(${hue},80%,55%,0.055) 0%, transparent 65%)`;
+  }, { passive: true });
 });
