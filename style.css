@@ -1,3 +1,16 @@
+/* ── SCROLL ANIMATIONS ── */
+.anim {
+  opacity: 0;
+  transition: opacity 0.65s cubic-bezier(0.4,0,0.2,1),
+              transform 0.65s cubic-bezier(0.4,0,0.2,1);
+  will-change: opacity, transform;
+}
+.anim.from-up    { transform: translateY(48px); }
+.anim.from-down  { transform: translateY(-32px); }
+.anim.from-left  { transform: translateX(-56px); }
+.anim.from-right { transform: translateX(56px); }
+.anim.visible    { opacity: 1; transform: none; }
+
 /* ── FONT AWESOME HELPERS ── */
 .card-icon i, .pj-icon i, .cta-icon i, .wi-icon i { font-size: inherit; }
 .wa-float i { font-size: 26px; }
