@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Contact – GSquareTech Software Solutions</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<nav>
+  <a href="index.html" class="nav-logo">GSquare<span>Tech</span></a>
+  <div class="nav-links">
+    <a href="index.html">Home</a><a href="about.html">About</a><a href="services.html">Services</a>
+    <a href="projects.html">Projects</a><a href="contact.html" class="active">Contact</a>
+    <a href="https://wa.me/255674724742" target="_blank" class="nav-whatsapp"><i class="fa-brands fa-whatsapp"></i> WhatsApp</a>
+  </div>
+  <button class="hamburger" onclick="toggleMenu()">&#9776;</button>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="index.html">Home</a><a href="about.html">About</a><a href="services.html">Services</a>
+  <a href="projects.html">Projects</a><a href="contact.html">Contact</a>
+  <a href="https://wa.me/255674724742" target="_blank"><i class="fa-brands fa-whatsapp" style="color:#25d366"></i> Chat on WhatsApp</a>
+</div>
+
+<div class="page">
+  <div class="page-hero">
+    <h1>Get in Touch</h1>
+    <p>Ready to build something great? Send us a message or chat on WhatsApp — we respond fast.</p>
+  </div>
+
+  <section>
+    <div class="contact-grid">
+
+      <!-- LEFT: Contact Info -->
+      <div class="contact-info">
+
+        <!-- WhatsApp CTA -->
+        <div style="background:linear-gradient(135deg,rgba(37,211,102,0.12),rgba(37,211,102,0.05)); border:1px solid rgba(37,211,102,0.35); border-radius:18px; padding:28px 24px; text-align:center;">
+          <div style="font-size:3rem; margin-bottom:12px; color:#25d366;"><i class="fa-brands fa-whatsapp"></i></div>
+          <h3 style="font-family:'Space Grotesk',sans-serif; color:#f8fafc; font-size:1.15rem; margin-bottom:10px;">Fastest Way to Reach Us</h3>
+          <p style="color:var(--muted); font-size:0.9rem; line-height:1.7; margin-bottom:18px;">WhatsApp is the quickest way to discuss your project. We usually reply within minutes.</p>
+          <a href="https://wa.me/255674724742?text=Hi%2C%20I%20want%20to%20discuss%20a%20project" target="_blank" class="btn-whatsapp" style="width:100%; justify-content:center; display:flex;"><i class="fa-brands fa-whatsapp"></i> Chat on WhatsApp</a>
+          <p style="margin-top:12px; font-size:0.82rem; color:var(--muted);">+255 674 724 742</p>
+        </div>
+
+        <!-- Email -->
+        <div class="contact-box">
+          <div style="font-size:1.8rem; margin-bottom:10px; color:var(--accent);"><i class="fa-solid fa-envelope"></i></div>
+          <h3>Email</h3>
+          <p><a href="mailto:geraldgarus18@gmail.com" style="color:var(--accent);">geraldgarus18@gmail.com</a></p>
+          <p style="font-size:0.82rem; margin-top:6px;">Ideal for project briefs and longer discussions.</p>
+        </div>
+
+        <!-- Phone -->
+        <div class="contact-box">
+          <div style="font-size:1.8rem; margin-bottom:10px; color:var(--accent);"><i class="fa-solid fa-phone"></i></div>
+          <h3>Phone / WhatsApp</h3>
+          <p><a href="tel:+255674724742" style="color:var(--accent);">+255 674 724 742</a></p>
+          <p style="font-size:0.82rem; margin-top:6px;">Available Mon–Sat &middot; 8 AM – 8 PM EAT</p>
+        </div>
+
+        <!-- Location -->
+        <div class="contact-box">
+          <div style="font-size:1.8rem; margin-bottom:10px; color:var(--gold);"><i class="fa-solid fa-location-dot"></i></div>
+          <h3>Location</h3>
+          <p>Dar es Salaam, Tanzania</p>
+          <p style="font-size:0.82rem; margin-top:6px;">Available for remote projects worldwide.</p>
+        </div>
+
+        <!-- GitHub -->
+        <div class="contact-box">
+          <div style="font-size:1.8rem; margin-bottom:10px; color:var(--muted);"><i class="fa-brands fa-github"></i></div>
+          <h3>GitHub</h3>
+          <p><a href="https://github.com/Geraldgarus" target="_blank" style="color:var(--accent);">github.com/Geraldgarus</a></p>
+          <p style="font-size:0.82rem; margin-top:6px;">See our open source work and code samples.</p>
+        </div>
+
+      </div>
+
+      <!-- RIGHT: Contact Form -->
+      <div class="contact-form">
+        <h3>Send Us a Message</h3>
+        <p style="color:var(--muted); font-size:0.88rem; margin-bottom:24px;">Fill in the form below and we will get back to you as soon as possible — usually within a few hours.</p>
+
+        <form onsubmit="handleSubmit(event)">
+          <div class="form-group">
+            <label>Your Name</label>
+            <input type="text" id="f-name" placeholder="e.g. John Mwangi" required>
+          </div>
+          <div class="form-group">
+            <label>Email Address</label>
+            <input type="email" id="f-email" placeholder="your@email.com" required>
+          </div>
+          <div class="form-group">
+            <label>Phone / WhatsApp</label>
+            <input type="tel" id="f-phone" placeholder="+255 7XX XXX XXX">
+          </div>
+          <div class="form-group">
+            <label>What Do You Need?</label>
+            <select id="f-service">
+              <option value="">— Select a service —</option>
+              <option>Hotel / Property Management System (PMS)</option>
+              <option>Point of Sale (POS) System</option>
+              <option>Inventory &amp; Stock Management</option>
+              <option>Website Development</option>
+              <option>Booking &amp; Appointment System</option>
+              <option>School / Student Management</option>
+              <option>Hospital / Clinic Management</option>
+              <option>HR &amp; Payroll System</option>
+              <option>AI &amp; Automation Tools</option>
+              <option>IT Consultancy &amp; Network Setup</option>
+              <option>Business Dashboard &amp; Reports</option>
+              <option>Database Design</option>
+              <option>Other / Custom Project</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Tell Us About Your Project</label>
+            <textarea id="f-message" placeholder="Describe your project, what you want to build, your business type, and any specific features you need..." required></textarea>
+          </div>
+          <div id="form-result" style="display:none; padding:12px 16px; border-radius:10px; font-size:0.88rem; margin-bottom:16px;"></div>
+          <button type="submit" class="btn-primary" style="width:100%; justify-content:center; display:flex; border:none; cursor:pointer;"><i class="fa-solid fa-paper-plane"></i> Send Message</button>
+        </form>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- QUICK CONTACT CARDS -->
+  <section style="padding-top:0;">
+    <h2 class="section-title">Need Something Specific?</h2>
+    <p class="section-sub">Click the card that matches your need and open a direct WhatsApp chat.</p>
+    <div class="accent-line"></div>
+    <div class="cta-cards">
+      <div class="cta-card">
+        <div class="cta-icon"><i class="fa-solid fa-hotel" style="color:var(--accent)"></i></div>
+        <h3>Hotel PMS / Resort System</h3>
+        <p>Need a complete hotel management system like Steps Premium? Let's discuss your requirements.</p>
+        <a href="https://wa.me/255674724742?text=Hi%2C%20I%20need%20a%20Hotel%20Property%20Management%20System" target="_blank"><i class="fa-brands fa-whatsapp"></i> Chat Now</a>
+      </div>
+      <div class="cta-card">
+        <div class="cta-icon"><i class="fa-solid fa-receipt" style="color:var(--gold)"></i></div>
+        <h3>POS System</h3>
+        <p>Need a Point of Sale system for your shop, restaurant, or business? Let's talk.</p>
+        <a href="https://wa.me/255674724742?text=Hi%2C%20I%20need%20a%20POS%20system%20for%20my%20business" target="_blank"><i class="fa-brands fa-whatsapp"></i> Chat Now</a>
+      </div>
+      <div class="cta-card">
+        <div class="cta-icon"><i class="fa-solid fa-globe" style="color:var(--accent)"></i></div>
+        <h3>Website</h3>
+        <p>Need a professional website for your business, hotel, or personal brand?</p>
+        <a href="https://wa.me/255674724742?text=Hi%2C%20I%20need%20a%20professional%20website%20built" target="_blank"><i class="fa-brands fa-whatsapp"></i> Chat Now</a>
+      </div>
+      <div class="cta-card">
+        <div class="cta-icon"><i class="fa-solid fa-gears" style="color:var(--gold)"></i></div>
+        <h3>Custom Software</h3>
+        <p>Have a unique business idea or system you want built? We can make it happen.</p>
+        <a href="https://wa.me/255674724742?text=Hi%2C%20I%20have%20a%20custom%20software%20project%20idea" target="_blank"><i class="fa-brands fa-whatsapp"></i> Chat Now</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FREE CONSULTATION -->
+  <section style="padding-top:0; text-align:center; padding-bottom:60px;">
+    <div class="card" style="max-width:680px; margin:0 auto; padding:44px 36px;">
+      <div style="font-size:2.5rem; margin-bottom:14px;"><i class="fa-solid fa-bullseye" style="color:var(--gold)"></i></div>
+      <h2 style="font-family:'Space Grotesk',sans-serif; color:var(--heading); font-size:1.6rem; margin-bottom:12px;">First Consultation is Free</h2>
+      <p style="color:var(--muted); line-height:1.8; margin-bottom:28px;">Not sure what you need? That's okay. Send us a message describing your business problem and we will suggest the best solution — no obligation, no cost.</p>
+      <a href="https://wa.me/255674724742?text=Hi%2C%20I%20want%20a%20free%20consultation%20about%20my%20business%20software%20needs" target="_blank" class="btn-whatsapp"><i class="fa-brands fa-whatsapp"></i> Start Free Consultation</a>
+    </div>
+  </section>
+
+</div>
+
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <div class="footer-logo">GSquare<span>Tech</span></div>
+      <p>Building smart digital solutions for businesses in Tanzania and beyond. From hotel systems to custom software — we make it happen.</p>
+      <a href="https://wa.me/255674724742?text=Hi%2C%20I%20want%20to%20discuss%20a%20project" target="_blank" class="footer-wa"><i class="fa-brands fa-whatsapp"></i> WhatsApp Us</a>
+    </div>
+    <div class="footer-col">
+      <h4>Quick Links</h4>
+      <a href="index.html">Home</a>
+      <a href="about.html">About Us</a>
+      <a href="services.html">Our Services</a>
+      <a href="projects.html">Projects</a>
+      <a href="contact.html">Contact</a>
+    </div>
+    <div class="footer-col">
+      <h4>Our Services</h4>
+      <a href="services.html">Hotel PMS System</a>
+      <a href="services.html">POS Systems</a>
+      <a href="services.html">Website Development</a>
+      <a href="services.html">Inventory Management</a>
+      <a href="services.html">IT Consultancy</a>
+    </div>
+    <div class="footer-col">
+      <h4>Contact Us</h4>
+      <p><i class="fa-solid fa-phone"></i> +255 674 724 742</p>
+      <p><i class="fa-solid fa-envelope"></i> geraldgarus18@gmail.com</p>
+      <p><i class="fa-solid fa-location-dot" style="color:var(--gold)"></i> Dar es Salaam, Tanzania</p>
+      <p><i class="fa-solid fa-clock"></i> Mon – Sat &middot; 8 AM – 8 PM</p>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>&copy; 2026 GSquareTech &middot; All rights reserved</p>
+    <div class="footer-bottom-links">
+      <a href="about.html">About</a>
+      <a href="services.html">Services</a>
+      <a href="contact.html">Contact</a>
+    </div>
+  </div>
+</footer>
+<a href="https://wa.me/255674724742" target="_blank" class="wa-float"><i class="fa-brands fa-whatsapp"></i></a>
+<script>
+function toggleMenu(){document.getElementById('mobileMenu').classList.toggle('open');}
+window.addEventListener('click',e=>{const m=document.getElementById('mobileMenu');if(!m.contains(e.target)&&!e.target.closest('.hamburger'))m.classList.remove('open');});
+
+function handleSubmit(e) {
+  e.preventDefault();
+  const name = document.getElementById('f-name').value.trim();
+  const email = document.getElementById('f-email').value.trim();
+  const phone = document.getElementById('f-phone').value.trim();
+  const service = document.getElementById('f-service').value;
+  const message = document.getElementById('f-message').value.trim();
+  const text = `Hi GSquareTech, I sent a message from your website.%0A%0A*Name:* ${encodeURIComponent(name)}%0A*Email:* ${encodeURIComponent(email)}${phone?'%0A*Phone:* '+encodeURIComponent(phone):''}${service?'%0A*Service:* '+encodeURIComponent(service):''}%0A%0A*Message:*%0A${encodeURIComponent(message)}`;
+  const res = document.getElementById('form-result');
+  res.style.display = 'block';
+  res.style.background = 'rgba(37,211,102,0.1)';
+  res.style.border = '1px solid rgba(37,211,102,0.35)';
+  res.style.color = '#4ade80';
+  res.textContent = 'Opening WhatsApp with your message...';
+  setTimeout(() => { window.open(`https://wa.me/255674724742?text=${text}`, '_blank'); }, 600);
+}
+</script>
+</body>
+</html>

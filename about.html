@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>About – GSquareTech Software Solutions</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<nav>
+  <a href="index.html" class="nav-logo">GSquare<span>Tech</span></a>
+  <div class="nav-links">
+    <a href="index.html">Home</a>
+    <a href="about.html" class="active">About</a>
+    <a href="services.html">Services</a>
+    <a href="projects.html">Projects</a>
+    <a href="contact.html">Contact</a>
+    <a href="https://wa.me/255674724742" target="_blank" class="nav-whatsapp"><i class="fa-brands fa-whatsapp"></i> WhatsApp</a>
+  </div>
+  <button class="hamburger" onclick="toggleMenu()">&#9776;</button>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="index.html">Home</a><a href="about.html">About</a><a href="services.html">Services</a>
+  <a href="projects.html">Projects</a><a href="contact.html">Contact</a>
+  <a href="https://wa.me/255674724742" target="_blank"><i class="fa-brands fa-whatsapp" style="color:#25d366"></i> Chat on WhatsApp</a>
+</div>
+
+<div class="page">
+  <div class="page-hero">
+    <h1>About Us</h1>
+    <p>A software development company based in Dar es Salaam, Tanzania — turning business problems into powerful digital solutions.</p>
+  </div>
+
+  <!-- WHO WE ARE -->
+  <section style="display:grid; grid-template-columns:1fr 1.2fr; gap:40px; align-items:center;">
+    <div style="text-align:center;">
+      <div style="width:200px; height:200px; border-radius:50%; background:linear-gradient(135deg,var(--card),var(--card2)); border:3px solid var(--accent); margin:0 auto; display:flex; align-items:center; justify-content:center; font-size:5rem; box-shadow:0 0 40px rgba(6,182,212,0.2);">
+        <i class="fa-solid fa-laptop-code" style="color:var(--accent)"></i>
+      </div>
+      <h2 style="font-family:'Space Grotesk',sans-serif; color:var(--heading); margin-top:20px; font-size:1.4rem;">GSquareTech Software Solutions</h2>
+      <p style="color:var(--accent); font-size:0.9rem; margin-top:4px;">Software Development &amp; IT Services</p>
+      <p style="color:var(--muted); font-size:0.85rem; margin-top:6px;"><i class="fa-solid fa-location-dot" style="color:var(--gold)"></i> Dar es Salaam, Tanzania</p>
+      <div style="display:flex; gap:12px; justify-content:center; margin-top:16px; flex-wrap:wrap;">
+        <a href="mailto:geraldgarus18@gmail.com" class="btn-outline" style="font-size:0.82rem; padding:8px 16px;"><i class="fa-solid fa-envelope"></i> Email Us</a>
+        <a href="https://wa.me/255674724742" target="_blank" class="btn-whatsapp" style="font-size:0.82rem; padding:8px 16px;"><i class="fa-brands fa-whatsapp"></i> WhatsApp</a>
+      </div>
+    </div>
+    <div>
+      <div class="card" style="margin-bottom:20px;">
+        <h3 style="color:var(--accent); margin-bottom:12px; font-size:1rem;"><i class="fa-solid fa-bullseye" style="color:var(--accent); margin-right:8px;"></i> Who We Are</h3>
+        <p style="color:var(--muted); line-height:1.8;">We are a software development company specializing in building custom digital solutions for businesses in Tanzania and beyond. Our expertise spans hotel management systems, point-of-sale platforms, inventory systems, professional websites, and full-scale business software — all designed to solve real problems and drive growth.</p>
+      </div>
+      <div class="card">
+        <h3 style="color:var(--accent); margin-bottom:12px; font-size:1rem;"><i class="fa-solid fa-lightbulb" style="color:var(--gold); margin-right:8px;"></i> Our Mission</h3>
+        <p style="color:var(--muted); line-height:1.8;">Our mission is to help businesses move away from manual processes and embrace smart, affordable, and reliable digital tools. Whether you run a hotel, a shop, a school, or any organization — we build the software that takes your business to the next level.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHAT WE DO -->
+  <section>
+    <h2 class="section-title">What We Do</h2>
+    <p class="section-sub">We deliver end-to-end software solutions — from planning and design to deployment and ongoing support.</p>
+    <div class="accent-line"></div>
+    <div class="cards-grid">
+      <div class="card">
+        <div class="card-icon"><i class="fa-solid fa-hotel" style="color:var(--accent)"></i></div>
+        <h3>Hotel &amp; Business Management Systems</h3>
+        <p>We build full Property Management Systems (PMS) covering reservations, housekeeping, restaurant POS, inventory, maintenance, and financial reports. Our Steps Premium Suite is a live example.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon"><i class="fa-solid fa-store" style="color:var(--gold)"></i></div>
+        <h3>Point of Sale (POS) Systems</h3>
+        <p>We develop custom POS solutions for shops, supermarkets, restaurants, bars, and pharmacies — with real-time sales tracking, cashier management, and daily reporting.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon"><i class="fa-solid fa-globe" style="color:var(--accent)"></i></div>
+        <h3>Professional Websites</h3>
+        <p>We design and build fast, mobile-responsive websites for hotels, businesses, schools, and personal brands — with hosting setup, domain management, and ongoing maintenance.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon"><i class="fa-solid fa-boxes-stacked" style="color:var(--accent)"></i></div>
+        <h3>Inventory &amp; Stock Management</h3>
+        <p>We create inventory systems that track products, purchases, and stock levels in real time — eliminating manual counting and reducing losses.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon"><i class="fa-solid fa-gears" style="color:var(--gold)"></i></div>
+        <h3>Custom Business Software</h3>
+        <p>From HR and payroll systems to hospital booking and school management — we build whatever your business needs, tailored exactly to how you work.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon"><i class="fa-solid fa-shield-halved" style="color:var(--accent)"></i></div>
+        <h3>IT Consultancy &amp; Network Setup</h3>
+        <p>We handle network design, Wi-Fi setup, IT infrastructure planning, and security — ensuring your business technology runs smoothly and securely.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHY CHOOSE US -->
+  <section style="padding-top:0;">
+    <h2 class="section-title">Why Choose Us</h2>
+    <div class="accent-line"></div>
+    <div class="cards-grid" style="grid-template-columns: repeat(auto-fit, minmax(220px,1fr));">
+      <div class="card" style="text-align:center;">
+        <div style="font-size:2.5rem; margin-bottom:12px;"><i class="fa-solid fa-bullseye" style="color:var(--accent)"></i></div>
+        <h3>Custom-Built Solutions</h3>
+        <p>We don't use generic templates. Every system we build is designed specifically for your business needs and workflows.</p>
+      </div>
+      <div class="card" style="text-align:center;">
+        <div style="font-size:2.5rem; margin-bottom:12px;"><i class="fa-solid fa-rocket" style="color:var(--gold)"></i></div>
+        <h3>Fast Delivery</h3>
+        <p>We work efficiently and keep you updated throughout the process — so your project is delivered on time, every time.</p>
+      </div>
+      <div class="card" style="text-align:center;">
+        <div style="font-size:2.5rem; margin-bottom:12px;"><i class="fa-solid fa-coins" style="color:var(--gold)"></i></div>
+        <h3>Affordable Pricing</h3>
+        <p>We offer competitive pricing for quality work. Our solutions are built to give maximum value for your investment.</p>
+      </div>
+      <div class="card" style="text-align:center;">
+        <div style="font-size:2.5rem; margin-bottom:12px;"><i class="fa-solid fa-screwdriver-wrench" style="color:var(--accent)"></i></div>
+        <h3>Ongoing Support</h3>
+        <p>We don't disappear after delivery. We provide training, support, and updates to keep your system running perfectly.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section style="padding-top:0; text-align:center; padding-bottom:60px;">
+    <div class="card" style="max-width:680px; margin:0 auto; padding:44px 36px;">
+      <div style="font-size:2.5rem; margin-bottom:14px;"><i class="fa-solid fa-handshake" style="color:var(--accent)"></i></div>
+      <h2 style="font-family:'Space Grotesk',sans-serif; color:var(--heading); font-size:1.6rem; margin-bottom:12px;">Ready to Work With Us?</h2>
+      <p style="color:var(--muted); line-height:1.8; margin-bottom:28px;">Tell us your business challenge and we will suggest the best digital solution — free consultation, no obligation.</p>
+      <div class="btn-group">
+        <a href="https://wa.me/255674724742?text=Hi%2C%20I%20want%20to%20work%20with%20you%20on%20a%20software%20project" target="_blank" class="btn-whatsapp"><i class="fa-brands fa-whatsapp"></i> Chat on WhatsApp</a>
+        <a href="services.html" class="btn-primary"><i class="fa-solid fa-rocket"></i> View Our Services</a>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <div class="footer-logo">GSquare<span>Tech</span></div>
+      <p>Building smart digital solutions for businesses in Tanzania and beyond. From hotel systems to custom software — we make it happen.</p>
+      <a href="https://wa.me/255674724742?text=Hi%2C%20I%20want%20to%20discuss%20a%20project" target="_blank" class="footer-wa"><i class="fa-brands fa-whatsapp"></i> WhatsApp Us</a>
+    </div>
+    <div class="footer-col">
+      <h4>Quick Links</h4>
+      <a href="index.html">Home</a>
+      <a href="about.html">About Us</a>
+      <a href="services.html">Our Services</a>
+      <a href="projects.html">Projects</a>
+      <a href="contact.html">Contact</a>
+    </div>
+    <div class="footer-col">
+      <h4>Our Services</h4>
+      <a href="services.html">Hotel PMS System</a>
+      <a href="services.html">POS Systems</a>
+      <a href="services.html">Website Development</a>
+      <a href="services.html">Inventory Management</a>
+      <a href="services.html">IT Consultancy</a>
+    </div>
+    <div class="footer-col">
+      <h4>Contact Us</h4>
+      <p><i class="fa-solid fa-phone"></i> +255 674 724 742</p>
+      <p><i class="fa-solid fa-envelope"></i> geraldgarus18@gmail.com</p>
+      <p><i class="fa-solid fa-location-dot" style="color:var(--gold)"></i> Dar es Salaam, Tanzania</p>
+      <p><i class="fa-solid fa-clock"></i> Mon – Sat &middot; 8 AM – 8 PM</p>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>&copy; 2026 GSquareTech &middot; All rights reserved</p>
+    <div class="footer-bottom-links">
+      <a href="about.html">About</a>
+      <a href="services.html">Services</a>
+      <a href="contact.html">Contact</a>
+    </div>
+  </div>
+</footer>
+<a href="https://wa.me/255674724742" target="_blank" class="wa-float"><i class="fa-brands fa-whatsapp"></i></a>
+<script>
+function toggleMenu(){document.getElementById('mobileMenu').classList.toggle('open');}
+window.addEventListener('click',e=>{const m=document.getElementById('mobileMenu');if(!m.contains(e.target)&&!e.target.closest('.hamburger'))m.classList.remove('open');});
+</script>
+</body>
+</html>
