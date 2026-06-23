@@ -88,12 +88,21 @@ nav {
 }
 .mobile-menu {
   display: none; position: fixed; top: 64px; left: 0; right: 0;
-  background: var(--card); border-bottom: 1px solid var(--border);
-  padding: 16px 24px; flex-direction: column; gap: 14px; z-index: 998;
+  background: var(--card2); border-bottom: 1px solid var(--border);
+  flex-direction: column; gap: 0; z-index: 998;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.5);
 }
 .mobile-menu.open { display: flex; }
-.mobile-menu a { color: var(--muted); font-size: 1rem; font-weight: 500; }
-.mobile-menu a:hover { color: var(--accent); }
+.mobile-menu a {
+  color: var(--muted); font-size: 0.95rem; font-weight: 500;
+  padding: 15px 24px;
+  border-bottom: 1px solid var(--border);
+  transition: all 0.2s;
+  display: flex; align-items: center; gap: 10px;
+}
+.mobile-menu a:last-child { border-bottom: none; background: rgba(37,211,102,0.08); color: #25d366; }
+.mobile-menu a:last-child:hover { background: rgba(37,211,102,0.15); color: #25d366; }
+.mobile-menu a:hover { color: var(--accent); background: rgba(6,182,212,0.06); padding-left: 32px; }
 
 /* ── PAGE WRAPPER ── */
 .page { padding-top: 64px; position: relative; z-index: 1; }
