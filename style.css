@@ -268,12 +268,15 @@ section h2.section-title {
 .cta-card p { color: var(--muted); font-size: 0.88rem; line-height: 1.6; flex: 1; }
 .cta-card a {
   display: inline-flex; align-items: center; gap: 7px;
-  background: var(--green); color: #fff;
+  background: transparent;
+  border: 1.5px solid rgba(37,211,102,0.50);
+  color: #25d366;
   padding: 9px 18px; border-radius: 20px;
   font-size: 0.85rem; font-weight: 700;
-  width: fit-content; transition: opacity 0.2s;
+  width: fit-content; transition: all 0.2s;
+  backdrop-filter: blur(8px);
 }
-.cta-card a:hover { opacity: 0.85; color: #fff; }
+.cta-card a:hover { background: rgba(37,211,102,0.12); border-color: #25d366; color: #fff; }
 
 /* ── WHY DIGITAL ── */
 .why-section {
