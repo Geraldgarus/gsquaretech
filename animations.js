@@ -230,7 +230,7 @@ document.addEventListener('DOMContentLoaded', () => {
   function spawnIconBubble() {
     const iconClass = icons[Math.floor(Math.random() * icons.length)];
     const size      = 44 + Math.floor(Math.random() * 52);
-    const dur       = 10 + Math.random() * 14;
+    const dur       = 4 + Math.random() * 6;
     const delay     = Math.random() * 2;
     const fontSize  = Math.round(size * 0.40);
     const dir       = directions[Math.floor(Math.random() * directions.length)];
