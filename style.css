@@ -12,12 +12,12 @@
 .anim.visible    { opacity: 1; transform: none; }
 
 /* ── FONT AWESOME HELPERS ── */
-.card-icon i, .pj-icon i, .cta-icon i, .wi-icon i { font-size: inherit; }
+.card-icon i, .pj-icon i, .cta-icon i, .wi-icon i { font-size: inherit; color: var(--silver); }
 .wa-float i { font-size: 26px; }
 .btn-primary i, .btn-whatsapp i, .btn-outline i, .footer-wa i { margin-right: 7px; }
 .plink i { margin-right: 5px; }
 .nav-whatsapp i { font-size: 1.1rem; line-height: 1; margin-right: 0; }
-.footer-col p i { margin-right: 9px; width: 16px; text-align: center; color: var(--accent); }
+.footer-col p i { margin-right: 9px; width: 16px; text-align: center; color: var(--silver); }
 .skill-badge i { margin-right: 6px; }
 
 /* ── SHARED STYLES ─────────────────────────────────────── */
@@ -33,6 +33,7 @@
   --accent2: #0ea5e9;
   --gold:    #f59e0b;
   --green:   #25d366;
+  --silver:  #c0c8d8;
   --text:    #e2e8f0;
   --muted:   #94a3b8;
   --heading: #f8fafc;
