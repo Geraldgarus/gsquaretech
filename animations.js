@@ -159,20 +159,43 @@ document.addEventListener('DOMContentLoaded', () => {
   const floatStyle = document.createElement('style');
   floatStyle.textContent = `
     @keyframes iconFloatUp {
-      0%   { transform: translateY(0)      rotate(0deg);   opacity: 0; }
+      0%   { transform: translateY(0)       rotate(0deg);    opacity: 0; }
       8%   { opacity: 0.18; }
       90%  { opacity: 0.10; }
-      100% { transform: translateY(-110vh) rotate(360deg); opacity: 0; }
+      100% { transform: translateY(-110vh)  rotate(360deg);  opacity: 0; }
     }
-    @keyframes iconFloatDrift {
-      0%   { transform: translateY(0)      translateX(0)    rotate(0deg);   opacity: 0; }
+    @keyframes iconFloatDown {
+      0%   { transform: translateY(0)       rotate(0deg);    opacity: 0; }
+      8%   { opacity: 0.18; }
+      90%  { opacity: 0.10; }
+      100% { transform: translateY(110vh)   rotate(-360deg); opacity: 0; }
+    }
+    @keyframes iconFloatLeft {
+      0%   { transform: translateX(0)       rotate(0deg);    opacity: 0; }
+      8%   { opacity: 0.18; }
+      90%  { opacity: 0.10; }
+      100% { transform: translateX(-110vw)  rotate(-270deg); opacity: 0; }
+    }
+    @keyframes iconFloatRight {
+      0%   { transform: translateX(0)       rotate(0deg);    opacity: 0; }
+      8%   { opacity: 0.18; }
+      90%  { opacity: 0.10; }
+      100% { transform: translateX(110vw)   rotate(270deg);  opacity: 0; }
+    }
+    @keyframes iconFloatDiag1 {
+      0%   { transform: translate(0, 0)           rotate(0deg);   opacity: 0; }
       8%   { opacity: 0.16; }
       90%  { opacity: 0.09; }
-      100% { transform: translateY(-110vh) translateX(70px) rotate(-270deg); opacity: 0; }
+      100% { transform: translate(60px, -110vh)   rotate(360deg); opacity: 0; }
+    }
+    @keyframes iconFloatDiag2 {
+      0%   { transform: translate(0, 0)           rotate(0deg);   opacity: 0; }
+      8%   { opacity: 0.16; }
+      90%  { opacity: 0.09; }
+      100% { transform: translate(-60px, 110vh)   rotate(-360deg); opacity: 0; }
     }
     .silver-icon-bubble {
-      position: absolute;
-      bottom: -90px;
+      position: fixed;
       border-radius: 50%;
       display: flex;
       align-items: center;
@@ -186,34 +209,45 @@ document.addEventListener('DOMContentLoaded', () => {
   document.head.appendChild(floatStyle);
 
   const colorSets = [
-    { bg: 'rgba(6,182,212,0.18)',  border: 'rgba(6,182,212,0.40)',  color: 'rgba(6,182,212,0.70)'  },  // cyan
-    { bg: 'rgba(168,85,247,0.15)', border: 'rgba(168,85,247,0.35)', color: 'rgba(168,85,247,0.70)' },  // purple
-    { bg: 'rgba(245,158,11,0.14)', border: 'rgba(245,158,11,0.32)', color: 'rgba(245,158,11,0.70)' },  // gold
-    { bg: 'rgba(34,197,94,0.13)',  border: 'rgba(34,197,94,0.30)',  color: 'rgba(34,197,94,0.70)'  },  // green
-    { bg: 'rgba(239,68,68,0.13)',  border: 'rgba(239,68,68,0.30)',  color: 'rgba(239,68,68,0.70)'  },  // red
-    { bg: 'rgba(99,102,241,0.14)', border: 'rgba(99,102,241,0.32)', color: 'rgba(99,102,241,0.70)' },  // indigo
+    { bg: 'rgba(6,182,212,0.18)',  border: 'rgba(6,182,212,0.40)',  color: 'rgba(6,182,212,0.70)'  },
+    { bg: 'rgba(168,85,247,0.15)', border: 'rgba(168,85,247,0.35)', color: 'rgba(168,85,247,0.70)' },
+    { bg: 'rgba(245,158,11,0.14)', border: 'rgba(245,158,11,0.32)', color: 'rgba(245,158,11,0.70)' },
+    { bg: 'rgba(34,197,94,0.13)',  border: 'rgba(34,197,94,0.30)',  color: 'rgba(34,197,94,0.70)'  },
+    { bg: 'rgba(239,68,68,0.13)',  border: 'rgba(239,68,68,0.30)',  color: 'rgba(239,68,68,0.70)'  },
+    { bg: 'rgba(99,102,241,0.14)', border: 'rgba(99,102,241,0.32)', color: 'rgba(99,102,241,0.70)' },
+  ];
+
+  // direction configs: [animation, startPos style]
+  const directions = [
+    { anim: 'iconFloatUp',    pos: () => ({ bottom: '-90px', left: Math.random()*95+'%' }) },
+    { anim: 'iconFloatDown',  pos: () => ({ top: '-90px',    left: Math.random()*95+'%' }) },
+    { anim: 'iconFloatLeft',  pos: () => ({ left: '105%',    top:  Math.random()*90+'%' }) },
+    { anim: 'iconFloatRight', pos: () => ({ right: '105%',   top:  Math.random()*90+'%' }) },
+    { anim: 'iconFloatDiag1', pos: () => ({ bottom: '-90px', left: Math.random()*95+'%' }) },
+    { anim: 'iconFloatDiag2', pos: () => ({ top: '-90px',    left: Math.random()*95+'%' }) },
   ];
 
   function spawnIconBubble() {
     const iconClass = icons[Math.floor(Math.random() * icons.length)];
     const size      = 44 + Math.floor(Math.random() * 52);
-    const left      = Math.random() * 95;
     const dur       = 10 + Math.random() * 14;
     const delay     = Math.random() * 2;
     const fontSize  = Math.round(size * 0.40);
-    const anim      = Math.random() > 0.5 ? 'iconFloatUp' : 'iconFloatDrift';
+    const dir       = directions[Math.floor(Math.random() * directions.length)];
+    const startPos  = dir.pos();
     const c         = colorSets[Math.floor(Math.random() * colorSets.length)];
 
     const el = document.createElement('div');
     el.className = 'silver-icon-bubble';
+    const posCSS = Object.entries(startPos).map(([k,v]) => `${k}:${v}`).join(';');
     el.style.cssText = `
       width:${size}px; height:${size}px;
-      left:${left}%;
       font-size:${fontSize}px;
       background:${c.bg};
       border-color:${c.border};
       color:${c.color};
-      animation:${anim} ${dur}s ${delay}s linear forwards;
+      animation:${dir.anim} ${dur}s ${delay}s linear forwards;
+      ${posCSS};
     `;
     const i = document.createElement('i');
     i.className = iconClass;
