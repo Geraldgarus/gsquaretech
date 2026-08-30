@@ -150,13 +150,12 @@ nav.nav-scrolled {
 
 /* ── HERO ── */
 .hero {
-  position: relative;
   min-height: 92vh;
   display: flex; align-items: center; justify-content: center;
   text-align: center; padding: 60px 24px;
   background: transparent;
 }
-.hero-inner { max-width: 780px; position: relative; z-index: 1; }
+.hero-inner { max-width: 780px; }
 .hero-badge {
   display: inline-block;
   background: rgba(6,182,212,0.1); border: 1px solid var(--border);
@@ -169,64 +168,8 @@ nav.nav-scrolled {
   font-size: clamp(2.2rem, 5vw, 3.5rem);
   font-weight: 800; line-height: 1.15;
   color: var(--heading); margin-bottom: 20px;
-  transition: opacity 0.6s ease, transform 0.6s ease;
 }
 .hero h1 span { color: var(--accent); }
-
-/* Fades out completely once the user starts scrolling — see the
-   scroll-triggered ".scrolled"/".collapsed" handling in animations.js. */
-.hero.scrolled h1 {
-  opacity: 0;
-  transform: translateY(-22px);
-  pointer-events: none;
-}
-
-/* Ring of tech icons around the heading. Anchored at the hero's center
-   (a zero-size point) so each icon can be placed with a plain translate
-   from that point — see --circle-x/--circle-y (set by JS in
-   animations.js) for the resting circle position and --star-x/--star-y
-   for where it flies to once collapsed. */
-.hero-orbit {
-  position: absolute;
-  top: 50%; left: 50%;
-  /* The paragraph/buttons/stats below the heading are invisible at rest
-     but still reserve their layout space, which would otherwise pull
-     this anchor down to the middle of the whole stack instead of the
-     heading. Nudge it back up so the ring actually centers on the
-     badge+heading, which is all that's visible until the user scrolls. */
-  margin-top: -70px;
-  width: 0; height: 0;
-  pointer-events: none;
-  z-index: 0;
-}
-.hero-orbit-icon {
-  position: absolute;
-  top: 0; left: 0;
-  width: 52px; height: 52px;
-  display: flex; align-items: center; justify-content: center;
-  border-radius: 50%;
-  font-size: 1.3rem;
-  background: rgba(6,182,212,0.10);
-  border: 1.5px solid rgba(6,182,212,0.35);
-  color: var(--accent);
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
-  opacity: 0.9;
-  transform: translate(-50%, -50%) translate(var(--circle-x, 0px), var(--circle-y, 0px));
-  transition: transform 1.5s cubic-bezier(0.65,0,0.35,1), opacity 0.9s ease;
-}
-/* Once collapsed, each icon flies up to its star-point position — delayed
-   just past the heading's own fade-out so the sequence reads as: heading
-   disappears, then the icons rise and re-form. */
-.hero-orbit.collapsed .hero-orbit-icon {
-  transform: translate(-50%, -50%) translate(var(--star-x, 0px), var(--star-y, 0px)) scale(0.8);
-  transition-delay: 0.5s;
-}
-@media (max-width: 820px) {
-  /* A full icon ring around the heading is too cramped on narrow
-     screens — hide it and just keep the plain fade behavior. */
-  .hero-orbit { display: none; }
-}
 .hero p {
   font-size: 1.1rem; color: var(--muted);
   line-height: 1.8; margin-bottom: 36px; max-width: 600px; margin-left: auto; margin-right: auto;
