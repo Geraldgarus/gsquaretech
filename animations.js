@@ -18,10 +18,34 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // ── Hero ──────────────────────────────────────────────────
   document.querySelectorAll('.hero-badge').forEach(el => anim(el, 'from-down'));
-  document.querySelectorAll('.hero h1, .page-hero h1').forEach(el => anim(el, 'from-down', 80));
-  document.querySelectorAll('.hero .hero-inner > p, .page-hero p').forEach(el => anim(el, 'from-up', 220));
-  document.querySelectorAll('.btn-group').forEach(el => anim(el, 'from-up', 340));
-  staggerIn('.stats-row', '.stat', 'from-up', 110);
+  document.querySelectorAll('.page-hero h1').forEach(el => anim(el, 'from-down', 80));
+  document.querySelectorAll('.page-hero p').forEach(el => anim(el, 'from-up', 220));
+  // .btn-group appears on every page's CTA sections too — only the
+  // homepage hero's copy is gated behind the orbit/star scroll sequence
+  // (see further down), so it's excluded here and handled separately.
+  document.querySelectorAll('.btn-group').forEach(el => {
+    if (el.closest('#hero')) return;
+    anim(el, 'from-up', 340);
+  });
+  // The intro paragraph, CTA buttons, and stats row inside the homepage
+  // hero don't reveal on load like everything else — they're gated
+  // behind the same scroll-triggered sequence that fades the heading and
+  // collapses the icon ring into a star (see "Hero orbit" below), so
+  // they're marked with .anim/.hero-gate here (start hidden) but kept
+  // out of the general IntersectionObserver loop and revealed manually.
+  const heroGated = [
+    ...document.querySelectorAll('.hero .hero-inner > p'),
+    ...document.querySelectorAll('#hero .btn-group'),
+    ...document.querySelectorAll('.stats-row .stat'),
+  ];
+  heroGated.forEach(el => el.classList.add('anim', 'from-up', 'hero-gate'));
+  // The reveal delay (set dynamically below, not here) is timed to start
+  // once the icon ring has essentially finished rising into its star
+  // (0.5s collapse delay + 1.5s transition, see .hero-orbit.collapsed in
+  // style.css) rather than the instant the sequence is triggered —
+  // otherwise the paragraph would fade in while the icons are still
+  // visibly mid-flight. Scrolling back up hides them immediately instead
+  // (no one wants to wait 2s for the reverse to start).
 
   // ── Section headers ───────────────────────────────────────
   document.querySelectorAll('.section-title').forEach(el => anim(el, 'from-down'));
@@ -35,12 +59,14 @@ document.addEventListener('DOMContentLoaded', () => {
   staggerIn('.why-grid',      '.why-item',     'from-up',   75);
   staggerIn('.contact-info',  '.contact-box',  'from-left', 80);
   staggerIn('.footer-top',    '.footer-col',   'from-up',   80);
+  staggerIn('.about-intro-cards', '.card',     'from-up',   90);
 
   // ── Stand-alone blocks ────────────────────────────────────
   document.querySelectorAll('.why-section').forEach(el => anim(el, 'from-up'));
   document.querySelectorAll('.contact-form').forEach(el => anim(el, 'from-right'));
   document.querySelectorAll('.footer-brand').forEach(el => anim(el, 'from-left'));
   document.querySelectorAll('.footer-bottom').forEach(el => anim(el, 'from-up', 200));
+  document.querySelectorAll('.about-profile').forEach(el => anim(el, 'from-left'));
 
   // Mission / CTA cards that sit alone outside a grid
   document.querySelectorAll('section > .card').forEach(el => anim(el, 'from-up'));
@@ -60,7 +86,70 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
 
-  document.querySelectorAll('.anim').forEach(el => io.observe(el));
+  // .hero-gate elements are revealed by the orbit/star sequence below,
+  // not by scrolling into view (they're already in the initial viewport,
+  // so the observer would fire almost immediately and defeat the gating).
+  document.querySelectorAll('.anim:not(.hero-gate)').forEach(el => io.observe(el));
+
+  // ── Hero orbit: icon ring → star, gated content reveal ────
+  // Lays out the icon ring around the heading and, once the visitor
+  // starts scrolling, fades the heading out, collapses the ring into a
+  // five-point star that rises toward the top of the hero, and — once
+  // that's had time to read — reveals the paragraph/buttons/stats that
+  // were marked .hero-gate above. Reverses the same way scrolling back
+  // to the top, so it isn't a one-shot effect.
+  (function heroOrbitSequence() {
+    const heroEl  = document.getElementById('hero');
+    const orbitEl = document.getElementById('heroOrbit');
+    if (!heroEl || !orbitEl) return;
+
+    const icons = Array.from(orbitEl.querySelectorAll('.hero-orbit-icon'));
+    const n = icons.length;
+    const circleR = Math.max(170, Math.min(260, window.innerWidth * 0.22));
+    // Lift tuned so the star settles with clearance below the fixed nav
+    // (64px tall) rather than partly hidden behind it.
+    const starOuterR = 95, starInnerR = 40, starLiftY = -220;
+
+    icons.forEach((icon) => {
+      const i = Number(icon.dataset.i);
+      const circleAngle = (-90 + i * (360 / n)) * (Math.PI / 180);
+      icon.style.setProperty('--circle-x', (circleR * Math.cos(circleAngle)).toFixed(1) + 'px');
+      icon.style.setProperty('--circle-y', (circleR * Math.sin(circleAngle)).toFixed(1) + 'px');
+
+      // Same 10 angles, alternating outer/inner radius, trace a 5-point
+      // star; the whole shape is lifted up toward the top of the hero.
+      const starAngle = circleAngle;
+      const starR = i % 2 === 0 ? starOuterR : starInnerR;
+      icon.style.setProperty('--star-x', (starR * Math.cos(starAngle)).toFixed(1) + 'px');
+      icon.style.setProperty('--star-y', (starR * Math.sin(starAngle) + starLiftY).toFixed(1) + 'px');
+    });
+
+    const gatedEls = Array.from(document.querySelectorAll('.hero-gate'));
+    let triggered = false;
+    const SCROLL_THRESHOLD = 120;
+
+    window.addEventListener('scroll', () => {
+      const past = window.scrollY > SCROLL_THRESHOLD;
+      if (past === triggered) return;
+      triggered = past;
+
+      heroEl.classList.toggle('scrolled', past);
+      orbitEl.classList.toggle('collapsed', past);
+      if (past) {
+        // Wait for the star to (mostly) finish forming before revealing.
+        gatedEls.forEach((el, i) => {
+          el.style.transitionDelay = (1900 + Math.min(i * 100, 300)) + 'ms';
+          el.classList.add('visible');
+        });
+      } else {
+        // Hide promptly — no one wants to wait ~2s for the reverse.
+        gatedEls.forEach(el => {
+          el.style.transitionDelay = '0ms';
+          el.classList.remove('visible');
+        });
+      }
+    }, { passive: true });
+  })();
 
   // ── SCROLL COLOR EFFECTS ─────────────────────────────────
 
