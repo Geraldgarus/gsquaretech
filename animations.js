@@ -38,11 +38,14 @@ document.addEventListener('DOMContentLoaded', () => {
     ...document.querySelectorAll('#hero .btn-group'),
     ...document.querySelectorAll('.stats-row .stat'),
   ];
-  // .anim/.from-up just gives correct baseline (hidden, offset) styling
-  // before JS's first frame runs — actual opacity/transform is driven
-  // directly and continuously by scroll position (see heroOrbitSequence
-  // below), not by adding a .visible class.
   heroGated.forEach(el => el.classList.add('anim', 'from-up', 'hero-gate'));
+  // The reveal delay (set dynamically below, not here) is timed to start
+  // once the icon ring has essentially finished rising into its star
+  // (0.5s collapse delay + 1.5s transition, see .hero-orbit.collapsed in
+  // style.css) rather than the instant the sequence is triggered —
+  // otherwise the paragraph would fade in while the icons are still
+  // visibly mid-flight. Scrolling back up hides them immediately instead
+  // (no one wants to wait 2s for the reverse to start).
 
   // ── Section headers ───────────────────────────────────────
   document.querySelectorAll('.section-title').forEach(el => anim(el, 'from-down'));
@@ -88,95 +91,64 @@ document.addEventListener('DOMContentLoaded', () => {
   // so the observer would fire almost immediately and defeat the gating).
   document.querySelectorAll('.anim:not(.hero-gate)').forEach(el => io.observe(el));
 
-  // ── Hero orbit: icon ellipse → star, gated content reveal ─
-  // Continuous, scroll-position-driven (not a one-shot CSS transition
-  // triggered by crossing a threshold): every scroll event recomputes
-  // the heading's opacity, each icon's exact position between its
-  // resting ellipse spot and its star-point spot, and the gated
-  // content's opacity, all as a direct function of how far the user has
-  // scrolled through a fixed pixel range. Nothing here depends on a
-  // transition finishing or a class successfully toggling, so the star
-  // can't get "stuck" mid-formation — it's always exactly where the
-  // current scroll position says it should be, in both directions.
+  // ── Hero orbit: icon ring → star, gated content reveal ────
+  // Lays out the icon ring around the heading and, once the visitor
+  // starts scrolling, fades the heading out, collapses the ring into a
+  // five-point star that rises toward the top of the hero, and — once
+  // that's had time to read — reveals the paragraph/buttons/stats that
+  // were marked .hero-gate above. Reverses the same way scrolling back
+  // to the top, so it isn't a one-shot effect.
   (function heroOrbitSequence() {
     const heroEl  = document.getElementById('hero');
     const orbitEl = document.getElementById('heroOrbit');
     if (!heroEl || !orbitEl) return;
 
-    const headingEl = heroEl.querySelector('h1');
     const icons = Array.from(orbitEl.querySelectorAll('.hero-orbit-icon'));
     const n = icons.length;
-
-    // An ellipse (wider than tall) hugs the heading's actual shape — a
-    // short block of wide text — far better than a true circle would,
-    // which either clips the text's width or leaves large empty gaps
-    // above/below it.
-    const radiusX = Math.max(190, Math.min(300, window.innerWidth * 0.24));
-    const radiusY = radiusX * 0.52;
-    // Star lift tuned so it settles with clearance below the fixed nav
+    const circleR = Math.max(170, Math.min(260, window.innerWidth * 0.22));
+    // Lift tuned so the star settles with clearance below the fixed nav
     // (64px tall) rather than partly hidden behind it.
-    const starOuterR = 85, starInnerR = 36, starLiftY = -210;
+    const starOuterR = 95, starInnerR = 40, starLiftY = -220;
 
-    const iconData = icons.map((icon) => {
+    icons.forEach((icon) => {
       const i = Number(icon.dataset.i);
-      const angle = (-90 + i * (360 / n)) * (Math.PI / 180);
+      const circleAngle = (-90 + i * (360 / n)) * (Math.PI / 180);
+      icon.style.setProperty('--circle-x', (circleR * Math.cos(circleAngle)).toFixed(1) + 'px');
+      icon.style.setProperty('--circle-y', (circleR * Math.sin(circleAngle)).toFixed(1) + 'px');
+
+      // Same 10 angles, alternating outer/inner radius, trace a 5-point
+      // star; the whole shape is lifted up toward the top of the hero.
+      const starAngle = circleAngle;
       const starR = i % 2 === 0 ? starOuterR : starInnerR;
-      return {
-        el: icon,
-        cx: radiusX * Math.cos(angle), cy: radiusY * Math.sin(angle),
-        sx: starR * Math.cos(angle),   sy: starR * Math.sin(angle) + starLiftY,
-      };
-    });
-    // Seed --circle-x/--circle-y so the ellipse is correctly shaped even
-    // before the first scroll-driven frame below runs.
-    iconData.forEach(d => {
-      d.el.style.setProperty('--circle-x', d.cx.toFixed(1) + 'px');
-      d.el.style.setProperty('--circle-y', d.cy.toFixed(1) + 'px');
+      icon.style.setProperty('--star-x', (starR * Math.cos(starAngle)).toFixed(1) + 'px');
+      icon.style.setProperty('--star-y', (starR * Math.sin(starAngle) + starLiftY).toFixed(1) + 'px');
     });
 
     const gatedEls = Array.from(document.querySelectorAll('.hero-gate'));
-    // Total scroll distance (px) the whole sequence plays out over —
-    // small enough that a couple of natural scroll gestures complete it,
-    // large enough that the fade genuinely reads as gradual rather than
-    // an instant snap.
-    const RANGE = 420;
+    let triggered = false;
+    const SCROLL_THRESHOLD = 120;
 
-    function update() {
-      const p = Math.min(1, Math.max(0, window.scrollY / RANGE)); // 0 → 1
-
-      // Heading fades out over the first 45% of the range.
-      const headP = Math.min(1, p / 0.45);
-      if (headingEl) {
-        headingEl.style.opacity = String(1 - headP);
-        headingEl.style.transform = `translateY(${(-18 * headP).toFixed(1)}px)`;
-      }
-
-      // Icons interpolate from their ellipse position to their star
-      // position across the first 70% of the range, continuously.
-      const iconP = Math.min(1, p / 0.7);
-      iconData.forEach(d => {
-        const x = d.cx + (d.sx - d.cx) * iconP;
-        const y = d.cy + (d.sy - d.cy) * iconP;
-        const scale = 1 - 0.2 * iconP;
-        d.el.style.transform = `translate(-50%,-50%) translate(${x.toFixed(1)}px, ${y.toFixed(1)}px) scale(${scale.toFixed(2)})`;
-      });
-
-      // Gated content fades in only once the star has essentially
-      // finished forming, over the remaining 40% of the range.
-      const contentP = Math.min(1, Math.max(0, (p - 0.6) / 0.4));
-      gatedEls.forEach(el => {
-        el.style.opacity = String(contentP);
-        el.style.transform = `translateY(${(48 * (1 - contentP)).toFixed(1)}px)`;
-      });
-    }
-
-    let queued = false;
     window.addEventListener('scroll', () => {
-      if (queued) return;
-      queued = true;
-      requestAnimationFrame(() => { update(); queued = false; });
+      const past = window.scrollY > SCROLL_THRESHOLD;
+      if (past === triggered) return;
+      triggered = past;
+
+      heroEl.classList.toggle('scrolled', past);
+      orbitEl.classList.toggle('collapsed', past);
+      if (past) {
+        // Wait for the star to (mostly) finish forming before revealing.
+        gatedEls.forEach((el, i) => {
+          el.style.transitionDelay = (1900 + Math.min(i * 100, 300)) + 'ms';
+          el.classList.add('visible');
+        });
+      } else {
+        // Hide promptly — no one wants to wait ~2s for the reverse.
+        gatedEls.forEach(el => {
+          el.style.transitionDelay = '0ms';
+          el.classList.remove('visible');
+        });
+      }
     }, { passive: true });
-    update(); // paint the correct initial state immediately
   })();
 
   // ── SCROLL COLOR EFFECTS ─────────────────────────────────
