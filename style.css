@@ -304,11 +304,6 @@ section h2.section-title {
   font-size: 1.25rem; color: var(--accent);
 }
 
-/* Split media — two photos side by side in one media panel (used for
-   Website Development: code on one half, an actual website/UI screen on
-   the other), same icon badge and fade overlay on top. */
-.stack-media.split { display: flex; }
-.stack-media.split img { flex: 1 1 50%; height: 100%; }
 .stack-body { flex: 1; padding: 30px 34px; display: flex; flex-direction: column; justify-content: center; }
 .stack-body h3 { font-family: 'Space Grotesk', sans-serif; font-size: 1.2rem; color: var(--heading); margin-bottom: 10px; }
 .stack-body p { color: var(--muted); font-size: 0.92rem; line-height: 1.75; }
@@ -395,9 +390,22 @@ section h2.section-title {
 .pj-body { flex: 1; padding: 24px 28px; display: flex; flex-direction: column; justify-content: center; }
 .project-card h3 { color: var(--heading); font-size: 1rem; font-weight: 700; margin-bottom: 8px; }
 .project-card p { color: var(--muted); font-size: 0.88rem; line-height: 1.6; margin-bottom: 12px; }
+
+/* Big icon panel — same size/position as the .stack-media photo panel above,
+   but a large centered icon instead of an image. */
+.pj-icon-panel {
+  flex: 0 0 32%;
+  display: flex; align-items: center; justify-content: center;
+  background: linear-gradient(160deg, rgba(6,182,212,0.12), rgba(10,25,41,0.55));
+  border-right: 1px solid rgba(192,200,216,0.15);
+}
+.pj-icon-panel i { font-size: 3.6rem; color: var(--silver); }
+
 @media (max-width: 768px) {
   .project-card { flex-direction: column; min-height: auto; }
   .project-card .stack-media { flex-basis: auto; height: 160px; }
+  .pj-icon-panel { flex-basis: auto; height: 130px; border-right: none; border-bottom: 1px solid rgba(192,200,216,0.15); }
+  .pj-icon-panel i { font-size: 2.8rem; }
 }
 .project-links { display: flex; flex-wrap: wrap; gap: 10px; }
 .plink {
