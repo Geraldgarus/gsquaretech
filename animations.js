@@ -30,9 +30,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // ── Card grids – staggered per container ─────────────────
   staggerIn('.cards-grid',    '.card',         'from-up',   80);
-  staggerIn('.cta-cards',     '.cta-card',     'from-up',   70);
+  staggerIn('.stack-cards',   '.stack-card',   'from-up',   90);
   staggerIn('.projects-grid', '.project-card', 'from-up',   90);
-  staggerIn('.why-grid',      '.why-item',     'from-up',   75);
   staggerIn('.contact-info',  '.contact-box',  'from-left', 80);
   staggerIn('.footer-top',    '.footer-col',   'from-up',   80);
 

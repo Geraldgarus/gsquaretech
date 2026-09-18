@@ -251,33 +251,6 @@ section h2.section-title {
 }
 .card p { color: var(--muted); font-size: 0.9rem; line-height: 1.65; }
 
-/* ── CTA CARDS (WhatsApp) ── */
-.cta-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(270px,1fr)); gap: 20px; }
-.cta-card {
-  background: rgba(13,31,53,0.30);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(192,200,216,0.35);
-  border-radius: 18px; padding: 26px 22px;
-  display: flex; flex-direction: column; gap: 14px;
-  transition: all 0.3s;
-}
-.cta-card:hover { border-color: rgba(192,200,216,0.65); transform: translateY(-3px); }
-.cta-card .cta-icon { font-size: 2rem; }
-.cta-card h3 { color: var(--heading); font-size: 1rem; font-weight: 700; }
-.cta-card p { color: var(--muted); font-size: 0.88rem; line-height: 1.6; flex: 1; }
-.cta-card a {
-  display: inline-flex; align-items: center; gap: 7px;
-  background: transparent;
-  border: 1.5px solid rgba(37,211,102,0.50);
-  color: #25d366;
-  padding: 9px 18px; border-radius: 20px;
-  font-size: 0.85rem; font-weight: 700;
-  width: fit-content; transition: all 0.2s;
-  backdrop-filter: blur(8px);
-}
-.cta-card a:hover { background: rgba(37,211,102,0.12); border-color: #25d366; color: #fff; }
-
 /* ── WHY DIGITAL ── */
 .why-section {
   background: rgba(10,25,41,0.30);
@@ -286,11 +259,94 @@ section h2.section-title {
   border: 1px solid rgba(192,200,216,0.35);
   border-radius: 24px; padding: 60px 40px; margin: 0 24px;
 }
-.why-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px,1fr)); gap: 28px; margin-top: 40px; }
-.why-item { text-align: center; }
-.why-item .wi-icon { font-size: 2.5rem; margin-bottom: 14px; }
-.why-item h4 { color: var(--heading); font-weight: 700; margin-bottom: 8px; }
-.why-item p { color: var(--muted); font-size: 0.88rem; line-height: 1.6; }
+
+/* ── STACK CARDS: sticky "stairs" scroll-stacking effect ──
+   Each card is position:sticky with a slightly larger `top` than the one
+   before it. As the page scrolls, a card sticks in place until the next
+   card's sticky point is reached, at which point the next card comes to
+   rest a little lower and a lot higher in z-index — covering the bottom of
+   the previous card while leaving its top edge peeking out above, like a
+   flight of stairs. Works for both the photo variant (services) and the
+   icon-only "simple" variant (why-reasons / why-choose-us). ── */
+.stack-cards {
+  display: flex;
+  flex-direction: column;
+  max-width: 880px;
+  margin: 0 auto;
+}
+.stack-card {
+  position: sticky;
+  display: flex;
+  align-items: stretch;
+  min-height: 200px;
+  margin-bottom: 22px;
+  border-radius: 22px;
+  overflow: hidden;
+  background: linear-gradient(160deg, rgba(13,31,53,0.96), rgba(8,18,32,0.98));
+  border: 1px solid rgba(192,200,216,0.30);
+  box-shadow: 0 24px 50px rgba(0,0,0,0.45);
+  transition: border-color 0.3s;
+}
+.stack-card:hover { border-color: rgba(192,200,216,0.55); }
+.stack-card:last-child { margin-bottom: 0; }
+
+.stack-media { flex: 0 0 40%; position: relative; min-height: 200px; }
+.stack-media img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.stack-media::after {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(100deg, rgba(4,13,26,0.05) 0%, rgba(4,13,26,0.55) 68%, rgba(4,13,26,0.94) 100%);
+}
+.stack-media .stack-icon {
+  position: absolute; top: 18px; left: 18px; z-index: 2;
+  width: 50px; height: 50px; border-radius: 50%;
+  background: rgba(4,13,26,0.82); border: 1.5px solid var(--accent);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.25rem; color: var(--accent);
+}
+.stack-body { flex: 1; padding: 30px 34px; display: flex; flex-direction: column; justify-content: center; }
+.stack-body h3 { font-family: 'Space Grotesk', sans-serif; font-size: 1.2rem; color: var(--heading); margin-bottom: 10px; }
+.stack-body p { color: var(--muted); font-size: 0.92rem; line-height: 1.75; }
+
+/* Simple variant — no media split, icon sits inline above the text */
+.stack-card.simple { display: block; padding: 30px 34px 32px; }
+.stack-card.simple .stack-icon-inline {
+  width: 52px; height: 52px; border-radius: 14px;
+  background: rgba(6,182,212,0.10); border: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.4rem; color: var(--accent); margin-bottom: 16px;
+}
+.stack-card.simple h3, .stack-card.simple h4 {
+  font-family: 'Space Grotesk', sans-serif; font-size: 1.05rem; color: var(--heading); margin-bottom: 8px;
+}
+.stack-card.simple p { color: var(--muted); font-size: 0.9rem; line-height: 1.7; }
+
+/* Incrementing sticky offsets → the actual staircase. Shared with
+   .project-card so Recent Projects / the Projects page stack the same way. */
+.stack-card:nth-child(1),  .project-card:nth-child(1)  { top: 84px;  z-index: 1; }
+.stack-card:nth-child(2),  .project-card:nth-child(2)  { top: 112px; z-index: 2; }
+.stack-card:nth-child(3),  .project-card:nth-child(3)  { top: 140px; z-index: 3; }
+.stack-card:nth-child(4),  .project-card:nth-child(4)  { top: 168px; z-index: 4; }
+.stack-card:nth-child(5),  .project-card:nth-child(5)  { top: 196px; z-index: 5; }
+.stack-card:nth-child(6),  .project-card:nth-child(6)  { top: 224px; z-index: 6; }
+.stack-card:nth-child(7),  .project-card:nth-child(7)  { top: 252px; z-index: 7; }
+.stack-card:nth-child(8),  .project-card:nth-child(8)  { top: 280px; z-index: 8; }
+.stack-card:nth-child(9),  .project-card:nth-child(9)  { top: 308px; z-index: 9; }
+.stack-card:nth-child(10), .project-card:nth-child(10) { top: 336px; z-index: 10; }
+
+@media (max-width: 768px) {
+  .stack-card { flex-direction: column; min-height: auto; }
+  .stack-media { flex-basis: auto; height: 170px; }
+  .stack-card:nth-child(1),  .project-card:nth-child(1)  { top: 74px; }
+  .stack-card:nth-child(2),  .project-card:nth-child(2)  { top: 96px; }
+  .stack-card:nth-child(3),  .project-card:nth-child(3)  { top: 118px; }
+  .stack-card:nth-child(4),  .project-card:nth-child(4)  { top: 140px; }
+  .stack-card:nth-child(5),  .project-card:nth-child(5)  { top: 162px; }
+  .stack-card:nth-child(6),  .project-card:nth-child(6)  { top: 184px; }
+  .stack-card:nth-child(7),  .project-card:nth-child(7)  { top: 206px; }
+  .stack-card:nth-child(8),  .project-card:nth-child(8)  { top: 228px; }
+  .stack-card:nth-child(9),  .project-card:nth-child(9)  { top: 250px; }
+  .stack-card:nth-child(10), .project-card:nth-child(10) { top: 272px; }
+}
 
 /* ── SKILLS GRID ── */
 .skills-wrap { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; }
@@ -305,17 +361,28 @@ section h2.section-title {
 }
 .skill-badge:hover { border-color: rgba(192,200,216,0.65); color: var(--silver); }
 
-/* ── PROJECTS ── */
-.project-card {
-  background: rgba(13,31,53,0.30);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(192,200,216,0.35);
-  border-radius: 16px; padding: 24px 22px;
-  display: flex; gap: 18px; align-items: flex-start;
-  transition: all 0.3s;
+/* ── PROJECTS ──
+   Stacks the same sticky "stairs" way as .stack-cards (shared nth-child
+   offsets above) — kept as its own class since the content/visual style
+   (icon + title + description + links) stays exactly as it was. */
+.projects-grid {
+  display: flex;
+  flex-direction: column;
+  max-width: 880px;
+  margin: 0 auto;
 }
-.project-card:hover { border-color: rgba(192,200,216,0.65); transform: translateY(-3px); }
+.project-card {
+  position: sticky;
+  background: linear-gradient(160deg, rgba(13,31,53,0.96), rgba(8,18,32,0.98));
+  border: 1px solid rgba(192,200,216,0.30);
+  border-radius: 20px; padding: 26px 26px;
+  display: flex; gap: 18px; align-items: flex-start;
+  margin-bottom: 22px;
+  box-shadow: 0 24px 50px rgba(0,0,0,0.45);
+  transition: border-color 0.3s;
+}
+.project-card:last-child { margin-bottom: 0; }
+.project-card:hover { border-color: rgba(192,200,216,0.65); }
 .project-card .pj-icon { font-size: 2.2rem; flex-shrink: 0; }
 .project-card h3 { color: var(--heading); font-size: 1rem; font-weight: 700; margin-bottom: 8px; }
 .project-card p { color: var(--muted); font-size: 0.88rem; line-height: 1.6; margin-bottom: 12px; }
@@ -329,23 +396,6 @@ section h2.section-title {
 }
 .plink:hover { background: rgba(192,200,216,0.10); border-color: var(--silver); color: #fff; }
 .projects-list { display: flex; flex-direction: column; gap: 18px; }
-
-/* 3-column grid for projects page */
-.projects-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 22px;
-}
-.projects-grid .project-card {
-  flex-direction: column;
-  align-items: flex-start;
-}
-@media (max-width: 900px) {
-  .projects-grid { grid-template-columns: repeat(2, 1fr); }
-}
-@media (max-width: 600px) {
-  .projects-grid { grid-template-columns: 1fr; }
-}
 
 /* ── CONTACT ── */
 .contact-grid { display: grid; grid-template-columns: 1fr 1.2fr; gap: 32px; }
