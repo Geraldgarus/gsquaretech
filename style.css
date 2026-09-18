@@ -303,6 +303,12 @@ section h2.section-title {
   display: flex; align-items: center; justify-content: center;
   font-size: 1.25rem; color: var(--accent);
 }
+
+/* Split media — two photos side by side in one media panel (used for
+   Website Development: code on one half, an actual website/UI screen on
+   the other), same icon badge and fade overlay on top. */
+.stack-media.split { display: flex; }
+.stack-media.split img { flex: 1 1 50%; height: 100%; }
 .stack-body { flex: 1; padding: 30px 34px; display: flex; flex-direction: column; justify-content: center; }
 .stack-body h3 { font-family: 'Space Grotesk', sans-serif; font-size: 1.2rem; color: var(--heading); margin-bottom: 10px; }
 .stack-body p { color: var(--muted); font-size: 0.92rem; line-height: 1.75; }
@@ -375,17 +381,24 @@ section h2.section-title {
   position: sticky;
   background: linear-gradient(160deg, rgba(13,31,53,0.96), rgba(8,18,32,0.98));
   border: 1px solid rgba(192,200,216,0.30);
-  border-radius: 20px; padding: 26px 26px;
-  display: flex; gap: 18px; align-items: flex-start;
+  border-radius: 20px;
+  overflow: hidden;
+  display: flex; align-items: stretch;
+  min-height: 190px;
   margin-bottom: 22px;
   box-shadow: 0 24px 50px rgba(0,0,0,0.45);
   transition: border-color 0.3s;
 }
 .project-card:last-child { margin-bottom: 0; }
 .project-card:hover { border-color: rgba(192,200,216,0.65); }
-.project-card .pj-icon { font-size: 2.2rem; flex-shrink: 0; }
+.project-card .stack-media { flex: 0 0 32%; }
+.pj-body { flex: 1; padding: 24px 28px; display: flex; flex-direction: column; justify-content: center; }
 .project-card h3 { color: var(--heading); font-size: 1rem; font-weight: 700; margin-bottom: 8px; }
 .project-card p { color: var(--muted); font-size: 0.88rem; line-height: 1.6; margin-bottom: 12px; }
+@media (max-width: 768px) {
+  .project-card { flex-direction: column; min-height: auto; }
+  .project-card .stack-media { flex-basis: auto; height: 160px; }
+}
 .project-links { display: flex; flex-wrap: wrap; gap: 10px; }
 .plink {
   display: inline-flex; align-items: center; gap: 6px;
@@ -399,16 +412,6 @@ section h2.section-title {
 
 /* ── CONTACT ── */
 .contact-grid { display: grid; grid-template-columns: 1fr 1.2fr; gap: 32px; }
-.contact-info { display: flex; flex-direction: column; gap: 16px; }
-.contact-box {
-  background: rgba(13,31,53,0.30);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(192,200,216,0.35);
-  border-radius: 16px; padding: 22px;
-}
-.contact-box h3 { color: var(--heading); font-weight: 700; margin-bottom: 8px; font-size: 0.95rem; }
-.contact-box p, .contact-box a { color: var(--muted); font-size: 0.9rem; }
 .contact-form {
   background: rgba(13,31,53,0.30);
   backdrop-filter: blur(12px);
