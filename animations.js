@@ -294,7 +294,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const iconClass = nextIcon();
     const size      = 28 + Math.floor(Math.random() * 30);
     const c         = colorSets[Math.floor(Math.random() * colorSets.length)];
-    const speed     = 1.0 + Math.random() * 1.8;          // px per frame
+    const speed     = 0.4 + Math.random() * 0.9;          // px per frame
     const heading   = Math.random() * Math.PI * 2;
 
     const el = document.createElement('div');
