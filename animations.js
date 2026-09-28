@@ -157,8 +157,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const floatStyle = document.createElement('style');
   floatStyle.textContent = `
     @keyframes iconShine {
-      0%, 100% { opacity: 0.55; filter: brightness(1);   }
-      50%      { opacity: 0.85; filter: brightness(1.35); }
+      0%, 100% { opacity: 0.30; filter: brightness(1);   }
+      50%      { opacity: 0.50; filter: brightness(1.2); }
     }
     .silver-icon-bubble {
       position: fixed;
@@ -193,7 +193,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   for (let n = 0; n < bubbleCount; n++) {
     const iconClass = icons[Math.floor(Math.random() * icons.length)];
-    const size      = 40 + Math.floor(Math.random() * 50);
+    const size      = 28 + Math.floor(Math.random() * 30);
     const c         = colorSets[Math.floor(Math.random() * colorSets.length)];
     const speed     = 0.4 + Math.random() * 0.9;          // px per frame
     const heading   = Math.random() * Math.PI * 2;
@@ -203,11 +203,11 @@ document.addEventListener('DOMContentLoaded', () => {
     el.style.cssText = `
       width:${size}px; height:${size}px;
       font-size:${Math.round(size * 0.42)}px;
-      background:rgba(${c.rgb},0.22);
-      border-color:rgba(${c.rgb},0.65);
-      color:rgba(${c.rgb},1);
-      box-shadow:0 0 14px rgba(${c.rgb},0.55), 0 0 32px rgba(${c.rgb},0.30), inset 0 0 10px rgba(${c.rgb},0.25);
-      text-shadow:0 0 8px rgba(${c.rgb},0.9);
+      background:rgba(${c.rgb},0.16);
+      border-color:rgba(${c.rgb},0.45);
+      color:rgba(${c.rgb},0.85);
+      box-shadow:0 0 8px rgba(${c.rgb},0.35), 0 0 18px rgba(${c.rgb},0.18);
+      text-shadow:0 0 5px rgba(${c.rgb},0.6);
       animation-duration:${2 + Math.random() * 3}s;
       animation-delay:-${Math.random() * 4}s;
     `;
