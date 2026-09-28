@@ -125,30 +125,129 @@ document.addEventListener('DOMContentLoaded', () => {
   }, { passive: true });
 
   // ── FLOATING SILVER ICONS ─────────────────────────────────
+  // Devicon supplies logos for languages, databases and dev tools
+  const deviconCSS = document.createElement('link');
+  deviconCSS.rel  = 'stylesheet';
+  deviconCSS.href = 'https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/devicon.min.css';
+  document.head.appendChild(deviconCSS);
+
   const icons = [
-    'fa-solid fa-code',
-    'fa-solid fa-laptop-code',
-    'fa-solid fa-database',
+    // Programming languages
+    'devicon-python-plain',
+    'devicon-javascript-plain',
+    'devicon-typescript-plain',
+    'devicon-java-plain',
+    'devicon-c-plain',
+    'devicon-cplusplus-plain',
+    'devicon-csharp-plain',
+    'devicon-php-plain',
+    'devicon-ruby-plain',
+    'devicon-go-plain',
+    'devicon-rust-plain',
+    'devicon-kotlin-plain',
+    'devicon-swift-plain',
+    'devicon-dart-plain',
+    'devicon-r-plain',
+    'devicon-scala-plain',
+    'devicon-perl-plain',
+    'devicon-lua-plain',
+    'devicon-haskell-plain',
+    'devicon-elixir-plain',
+    'devicon-erlang-plain',
+    'devicon-clojure-plain',
+    'devicon-groovy-plain',
+    'devicon-julia-plain',
+    'devicon-matlab-plain',
+    'devicon-objectivec-plain',
+    'devicon-solidity-plain',
+    'devicon-bash-plain',
+    'devicon-powershell-plain',
+    'devicon-html5-plain',
+    'devicon-css3-plain',
+    // Databases
+    'devicon-mysql-plain',
+    'devicon-postgresql-plain',
+    'devicon-mongodb-plain',
+    'devicon-sqlite-plain',
+    'devicon-redis-plain',
+    'devicon-oracle-plain',
+    'devicon-microsoftsqlserver-plain',
+    'devicon-mariadb-plain',
+    'devicon-firebase-plain',
+    'devicon-cassandra-plain',
+    'devicon-elasticsearch-plain',
+    'devicon-neo4j-plain',
+    'devicon-couchdb-plain',
+    'devicon-dynamodb-plain',
+    'devicon-supabase-plain',
+    // Version control & DevOps
+    'devicon-git-plain',
+    'devicon-github-plain',
+    'devicon-gitlab-plain',
+    'devicon-bitbucket-plain',
+    'devicon-githubactions-plain',
+    'devicon-docker-plain',
+    'devicon-podman-plain',
+    'devicon-kubernetes-plain',
+    'devicon-jenkins-plain',
+    'devicon-terraform-plain',
+    'devicon-ansible-plain',
+    'devicon-grafana-plain',
+    'devicon-prometheus-original',
+    'devicon-nginx-plain',
+    'devicon-apache-plain',
+    // Cloud & operating systems
+    'devicon-amazonwebservices-plain',
+    'devicon-azure-plain',
+    'devicon-googlecloud-plain',
+    'devicon-linux-plain',
+    'devicon-ubuntu-plain',
+    'devicon-debian-plain',
+    'devicon-centos-plain',
+    'devicon-redhat-plain',
+    'devicon-windows8-original',
+    'devicon-apple-original',
+    'devicon-android-plain',
+    // Frameworks & tools
+    'devicon-react-plain',
+    'devicon-vuejs-plain',
+    'devicon-angular-plain',
+    'devicon-nextjs-plain',
+    'devicon-nodejs-plain',
+    'devicon-express-original',
+    'devicon-laravel-plain',
+    'devicon-django-plain',
+    'devicon-flask-plain',
+    'devicon-spring-plain',
+    'devicon-dotnetcore-plain',
+    'devicon-flutter-plain',
+    'devicon-tailwindcss-plain',
+    'devicon-bootstrap-plain',
+    'devicon-graphql-plain',
+    'devicon-vscode-plain',
+    'devicon-figma-plain',
+    'devicon-jira-plain',
+    // General IT
     'fa-solid fa-server',
-    'fa-solid fa-globe',
-    'fa-solid fa-mobile-screen',
-    'fa-solid fa-cloud',
+    'fa-solid fa-network-wired',
     'fa-solid fa-shield-halved',
     'fa-solid fa-microchip',
+    'fa-solid fa-cloud',
     'fa-solid fa-terminal',
-    'fa-solid fa-wifi',
-    'fa-solid fa-lock',
-    'fa-solid fa-gear',
-    'fa-solid fa-bug',
-    'fa-solid fa-network-wired',
-    'fa-solid fa-chart-line',
-    'fa-brands fa-html5',
-    'fa-brands fa-css3-alt',
-    'fa-brands fa-js',
-    'fa-brands fa-node-js',
-    'fa-brands fa-github',
-    'fa-brands fa-react',
   ];
+
+  // Deal icons from a shuffled deck so every one gets shown before any repeats
+  let deck = [];
+  function nextIcon() {
+    if (!deck.length) {
+      deck = icons.slice();
+      for (let k = deck.length - 1; k > 0; k--) {
+        const j = Math.floor(Math.random() * (k + 1));
+        [deck[k], deck[j]] = [deck[j], deck[k]];
+      }
+    }
+    return deck.pop();
+  }
 
   const floatContainer = document.createElement('div');
   floatContainer.style.cssText = 'position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden;';
@@ -192,7 +291,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const bubbles = [];
 
   for (let n = 0; n < bubbleCount; n++) {
-    const iconClass = icons[Math.floor(Math.random() * icons.length)];
+    const iconClass = nextIcon();
     const size      = 28 + Math.floor(Math.random() * 30);
     const c         = colorSets[Math.floor(Math.random() * colorSets.length)];
     const speed     = 0.4 + Math.random() * 0.9;          // px per frame
@@ -215,6 +314,9 @@ document.addEventListener('DOMContentLoaded', () => {
     i.className = iconClass;
     el.appendChild(i);
     floatContainer.appendChild(el);
+
+    // Swap to a fresh icon every 8–16s so the whole set rotates through
+    setInterval(() => { i.className = nextIcon(); }, 8000 + Math.random() * 8000);
 
     bubbles.push({
       el, size, speed, heading,
