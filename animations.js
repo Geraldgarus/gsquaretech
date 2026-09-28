@@ -157,8 +157,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const floatStyle = document.createElement('style');
   floatStyle.textContent = `
     @keyframes iconShine {
-      0%, 100% { opacity: 0.30; filter: brightness(1);   }
-      50%      { opacity: 0.50; filter: brightness(1.2); }
+      0%, 100% { opacity: 0.18; filter: brightness(1);   }
+      50%      { opacity: 0.30; filter: brightness(1.1); }
     }
     .silver-icon-bubble {
       position: fixed;
@@ -206,8 +206,8 @@ document.addEventListener('DOMContentLoaded', () => {
       background:rgba(${c.rgb},0.16);
       border-color:rgba(${c.rgb},0.45);
       color:rgba(${c.rgb},0.85);
-      box-shadow:0 0 8px rgba(${c.rgb},0.35), 0 0 18px rgba(${c.rgb},0.18);
-      text-shadow:0 0 5px rgba(${c.rgb},0.6);
+      box-shadow:0 0 6px rgba(${c.rgb},0.22), 0 0 14px rgba(${c.rgb},0.10);
+      text-shadow:0 0 4px rgba(${c.rgb},0.4);
       animation-duration:${2 + Math.random() * 3}s;
       animation-delay:-${Math.random() * 4}s;
     `;
