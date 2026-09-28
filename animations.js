@@ -156,44 +156,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const floatStyle = document.createElement('style');
   floatStyle.textContent = `
-    @keyframes iconFloatUp {
-      0%   { transform: translateY(0)       rotate(0deg);    opacity: 0; }
-      8%   { opacity: 0.18; }
-      90%  { opacity: 0.10; }
-      100% { transform: translateY(-110vh)  rotate(360deg);  opacity: 0; }
-    }
-    @keyframes iconFloatDown {
-      0%   { transform: translateY(0)       rotate(0deg);    opacity: 0; }
-      8%   { opacity: 0.18; }
-      90%  { opacity: 0.10; }
-      100% { transform: translateY(110vh)   rotate(-360deg); opacity: 0; }
-    }
-    @keyframes iconFloatLeft {
-      0%   { transform: translateX(0)       rotate(0deg);    opacity: 0; }
-      8%   { opacity: 0.18; }
-      90%  { opacity: 0.10; }
-      100% { transform: translateX(-110vw)  rotate(-270deg); opacity: 0; }
-    }
-    @keyframes iconFloatRight {
-      0%   { transform: translateX(0)       rotate(0deg);    opacity: 0; }
-      8%   { opacity: 0.18; }
-      90%  { opacity: 0.10; }
-      100% { transform: translateX(110vw)   rotate(270deg);  opacity: 0; }
-    }
-    @keyframes iconFloatDiag1 {
-      0%   { transform: translate(0, 0)           rotate(0deg);   opacity: 0; }
-      8%   { opacity: 0.16; }
-      90%  { opacity: 0.09; }
-      100% { transform: translate(60px, -110vh)   rotate(360deg); opacity: 0; }
-    }
-    @keyframes iconFloatDiag2 {
-      0%   { transform: translate(0, 0)           rotate(0deg);   opacity: 0; }
-      8%   { opacity: 0.16; }
-      90%  { opacity: 0.09; }
-      100% { transform: translate(-60px, 110vh)   rotate(-360deg); opacity: 0; }
+    @keyframes iconShine {
+      0%, 100% { opacity: 0.55; filter: brightness(1);   }
+      50%      { opacity: 0.85; filter: brightness(1.35); }
     }
     .silver-icon-bubble {
       position: fixed;
+      top: 0;
+      left: 0;
       border-radius: 50%;
       display: flex;
       align-items: center;
@@ -202,60 +172,78 @@ document.addEventListener('DOMContentLoaded', () => {
       backdrop-filter: blur(2px);
       user-select: none;
       pointer-events: none;
+      will-change: transform;
+      animation: iconShine ease-in-out infinite;
     }
   `;
   document.head.appendChild(floatStyle);
 
   const colorSets = [
-    { bg: 'rgba(6,182,212,0.18)',  border: 'rgba(6,182,212,0.40)',  color: 'rgba(6,182,212,0.70)'  },
-    { bg: 'rgba(168,85,247,0.15)', border: 'rgba(168,85,247,0.35)', color: 'rgba(168,85,247,0.70)' },
-    { bg: 'rgba(245,158,11,0.14)', border: 'rgba(245,158,11,0.32)', color: 'rgba(245,158,11,0.70)' },
-    { bg: 'rgba(34,197,94,0.13)',  border: 'rgba(34,197,94,0.30)',  color: 'rgba(34,197,94,0.70)'  },
-    { bg: 'rgba(239,68,68,0.13)',  border: 'rgba(239,68,68,0.30)',  color: 'rgba(239,68,68,0.70)'  },
-    { bg: 'rgba(99,102,241,0.14)', border: 'rgba(99,102,241,0.32)', color: 'rgba(99,102,241,0.70)' },
+    { rgb: '6,182,212'   },
+    { rgb: '168,85,247'  },
+    { rgb: '245,158,11'  },
+    { rgb: '34,197,94'   },
+    { rgb: '239,68,68'   },
+    { rgb: '99,102,241'  },
   ];
 
-  // direction configs: [animation, startPos style]
-  const directions = [
-    { anim: 'iconFloatUp',    pos: () => ({ bottom: '-90px', left: Math.random()*95+'%' }) },
-    { anim: 'iconFloatDown',  pos: () => ({ top: '-90px',    left: Math.random()*95+'%' }) },
-    { anim: 'iconFloatLeft',  pos: () => ({ left: '105%',    top:  Math.random()*90+'%' }) },
-    { anim: 'iconFloatRight', pos: () => ({ right: '105%',   top:  Math.random()*90+'%' }) },
-    { anim: 'iconFloatDiag1', pos: () => ({ bottom: '-90px', left: Math.random()*95+'%' }) },
-    { anim: 'iconFloatDiag2', pos: () => ({ top: '-90px',    left: Math.random()*95+'%' }) },
-  ];
+  // A fixed pool of bubbles that wander the screen forever
+  const bubbleCount = window.innerWidth < 768 ? 18 : 34;
+  const bubbles = [];
 
-  function spawnIconBubble() {
+  for (let n = 0; n < bubbleCount; n++) {
     const iconClass = icons[Math.floor(Math.random() * icons.length)];
-    const size      = 44 + Math.floor(Math.random() * 52);
-    const dur       = 2.5 + Math.random() * 3.5;
-    const delay     = Math.random() * 2;
-    const fontSize  = Math.round(size * 0.40);
-    const dir       = directions[Math.floor(Math.random() * directions.length)];
-    const startPos  = dir.pos();
+    const size      = 40 + Math.floor(Math.random() * 50);
     const c         = colorSets[Math.floor(Math.random() * colorSets.length)];
+    const speed     = 0.4 + Math.random() * 0.9;          // px per frame
+    const heading   = Math.random() * Math.PI * 2;
 
     const el = document.createElement('div');
     el.className = 'silver-icon-bubble';
-    const posCSS = Object.entries(startPos).map(([k,v]) => `${k}:${v}`).join(';');
     el.style.cssText = `
       width:${size}px; height:${size}px;
-      font-size:${fontSize}px;
-      background:${c.bg};
-      border-color:${c.border};
-      color:${c.color};
-      animation:${dir.anim} ${dur}s ${delay}s linear forwards;
-      ${posCSS};
+      font-size:${Math.round(size * 0.42)}px;
+      background:rgba(${c.rgb},0.22);
+      border-color:rgba(${c.rgb},0.65);
+      color:rgba(${c.rgb},1);
+      box-shadow:0 0 14px rgba(${c.rgb},0.55), 0 0 32px rgba(${c.rgb},0.30), inset 0 0 10px rgba(${c.rgb},0.25);
+      text-shadow:0 0 8px rgba(${c.rgb},0.9);
+      animation-duration:${2 + Math.random() * 3}s;
+      animation-delay:-${Math.random() * 4}s;
     `;
     const i = document.createElement('i');
     i.className = iconClass;
     el.appendChild(i);
     floatContainer.appendChild(el);
-    setTimeout(() => el.remove(), (dur + delay + 1) * 1000);
+
+    bubbles.push({
+      el, size, speed, heading,
+      x: Math.random() * (window.innerWidth  - size),
+      y: Math.random() * (window.innerHeight - size),
+      rot: Math.random() * 360,
+      spin: (Math.random() - 0.5) * 1.2,
+    });
   }
 
-  // Spawn initial batch spread out
-  for (let i = 0; i < 14; i++) setTimeout(spawnIconBubble, i * 500);
-  // Keep spawning continuously
-  setInterval(spawnIconBubble, 1600);
+  function moveBubbles() {
+    const w = window.innerWidth;
+    const h = window.innerHeight;
+    for (const b of bubbles) {
+      // Nudge the heading a little each frame so the path keeps changing
+      b.heading += (Math.random() - 0.5) * 0.12;
+      b.x += Math.cos(b.heading) * b.speed;
+      b.y += Math.sin(b.heading) * b.speed;
+      b.rot += b.spin;
+
+      // Bounce off the screen edges
+      if (b.x < 0)          { b.x = 0;          b.heading = Math.PI - b.heading; }
+      if (b.x > w - b.size) { b.x = w - b.size; b.heading = Math.PI - b.heading; }
+      if (b.y < 0)          { b.y = 0;          b.heading = -b.heading; }
+      if (b.y > h - b.size) { b.y = h - b.size; b.heading = -b.heading; }
+
+      b.el.style.transform = `translate3d(${b.x}px, ${b.y}px, 0) rotate(${b.rot}deg)`;
+    }
+    requestAnimationFrame(moveBubbles);
+  }
+  requestAnimationFrame(moveBubbles);
 });
