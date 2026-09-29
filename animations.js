@@ -256,8 +256,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const floatStyle = document.createElement('style');
   floatStyle.textContent = `
     @keyframes iconShine {
-      0%, 100% { opacity: 0.18; filter: brightness(1);   }
-      50%      { opacity: 0.30; filter: brightness(1.1); }
+      0%, 100% { opacity: 0.14; filter: brightness(1);   }
+      50%      { opacity: 0.24; filter: brightness(1.1); }
     }
     .silver-icon-bubble {
       position: fixed;
