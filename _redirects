@@ -1,0 +1,8 @@
+# Netlify: pages live at clean addresses (/about, /services, /projects,
+# /contact). Netlify serves /projects from projects.html by itself; these
+# rules send old .html links (bookmarks, search results) to the clean ones.
+/index.html     /           301!
+/about.html     /about      301!
+/services.html  /services   301!
+/projects.html  /projects   301!
+/contact.html   /contact    301!
