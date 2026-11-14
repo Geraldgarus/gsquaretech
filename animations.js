@@ -32,7 +32,6 @@ document.addEventListener('DOMContentLoaded', () => {
   staggerIn('.cards-grid',    '.card',         'from-up',   80);
   staggerIn('.stack-cards',   '.stack-card',   'from-up',   90);
   staggerIn('.projects-grid', '.project-card', 'from-up',   90);
-  staggerIn('.sector-grid',   '.sector-tile',  'from-up',   50);
   staggerIn('.footer-top',    '.footer-col',   'from-up',   80);
 
   // ── Stand-alone blocks ────────────────────────────────────

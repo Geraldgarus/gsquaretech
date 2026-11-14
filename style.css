@@ -545,17 +545,10 @@ footer {
 }
 
 
-/* ── About: sectors we serve ── */
-.sector-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 16px; max-width: 980px; margin: 0 auto; }
-.sector-tile {
-  display: flex; align-items: center; gap: 14px; padding: 16px 18px; border-radius: 16px;
-  background: linear-gradient(160deg, rgba(13,31,53,0.96), rgba(8,18,32,0.98));
-  border: 1px solid rgba(192,200,216,0.25); color: var(--heading); text-decoration: none;
-  font-size: 0.92rem; line-height: 1.4; transition: border-color 0.3s, transform 0.3s;
-}
-.sector-tile:hover { border-color: rgba(6,182,212,0.6); transform: translateY(-3px); }
-.sector-tile i {
-  flex: 0 0 42px; width: 42px; height: 42px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
-  background: rgba(4,13,26,0.82); border: 1.5px solid var(--accent); color: var(--accent); font-size: 1.05rem;
-}
-.sector-more { border-style: dashed; border-color: rgba(6,182,212,0.5); color: var(--muted); }
+/* ── About: sectors we serve (inside the stair cards) ── */
+.sector-list { list-style: none; margin: 16px 0 0; padding: 0; display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px 24px; }
+@media (max-width: 640px) { .sector-list { grid-template-columns: 1fr; } }
+.sector-list li { display: flex; align-items: center; gap: 12px; color: var(--heading); font-size: 0.92rem; line-height: 1.4; }
+.sector-ico { flex: 0 0 36px; width: 36px; height: 36px; padding: 7px; box-sizing: border-box; border-radius: 50%; border: 1.5px solid var(--accent); color: var(--accent); background: rgba(4,13,26,0.82); }
+.sector-cta { display: inline-flex; align-items: center; gap: 8px; margin-top: 16px; font-size: 0.88rem; padding: 9px 18px; }
+.sector-cta .sector-ico { flex: 0 0 22px; width: 22px; height: 22px; padding: 0; border: 0; background: none; }
