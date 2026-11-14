@@ -291,7 +291,7 @@ section h2.section-title {
 .stack-card:last-child { margin-bottom: 0; }
 
 .stack-media { flex: 0 0 40%; position: relative; min-height: 200px; }
-.stack-media img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.stack-media img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; } /* out of the flow, so a tall photo can no longer stretch its card */
 .stack-media::after {
   content: ''; position: absolute; inset: 0;
   background: linear-gradient(100deg, rgba(4,13,26,0.05) 0%, rgba(4,13,26,0.55) 68%, rgba(4,13,26,0.94) 100%);
@@ -543,3 +543,19 @@ footer {
   nav { padding: 0 16px; }
   .hero h1 { font-size: 1.9rem; }
 }
+
+
+/* ── About: sectors we serve ── */
+.sector-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 16px; max-width: 980px; margin: 0 auto; }
+.sector-tile {
+  display: flex; align-items: center; gap: 14px; padding: 16px 18px; border-radius: 16px;
+  background: linear-gradient(160deg, rgba(13,31,53,0.96), rgba(8,18,32,0.98));
+  border: 1px solid rgba(192,200,216,0.25); color: var(--heading); text-decoration: none;
+  font-size: 0.92rem; line-height: 1.4; transition: border-color 0.3s, transform 0.3s;
+}
+.sector-tile:hover { border-color: rgba(6,182,212,0.6); transform: translateY(-3px); }
+.sector-tile i {
+  flex: 0 0 42px; width: 42px; height: 42px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+  background: rgba(4,13,26,0.82); border: 1.5px solid var(--accent); color: var(--accent); font-size: 1.05rem;
+}
+.sector-more { border-style: dashed; border-color: rgba(6,182,212,0.5); color: var(--muted); }
